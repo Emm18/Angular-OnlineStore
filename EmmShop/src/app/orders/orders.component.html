@@ -1,0 +1,56 @@
+<div class="container">
+  <div class="row center">
+    <app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
+  </div>
+
+  <div class="row" *ngIf="orders.length > 0">
+    <div class="col s12 card-content" *ngFor="let order of orders">
+      <div class="card">
+        <div class="card-content">
+          <p class="right">{{ order.status | uppercase }}</p>
+          Order Number : {{ order.orderNumber | uppercase }}
+          <br />
+          Estimated Delivery :
+          {{ order.estimatedShipping | uppercase }}
+
+          <hr />
+
+          <div class="row">
+            <div class="col s12">
+              <label for="items"><p>Items ordered:</p></label>
+              <table id="items" class="striped centered">
+                <thead>
+                  <th>Product</th>
+                  <th>Quantity</th>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of order.cart; let i = index">
+                    <td>
+                      {{ item.product.name }}
+                    </td>
+                    <td>
+                      {{ item.quantity }}
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col s12">
+              <label for="payment"><p>Total amount paid:</p></label>
+              <div id="total" class="right">
+                <h4>{{ order.total | currency }}</h4>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col s12" *ngIf="orders.length === 0">
+    <h1>You haven't ordered anything yet!</h1>
+    <a class="btn" routerLink="/products">View Products To Order</a>
+  </div>
+</div>

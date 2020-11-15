@@ -1,0 +1,35 @@
+<div class="container">
+  <div class="row center">
+    <app-loading-spinner *ngIf="!product"></app-loading-spinner>
+  </div>
+  <div class="card center-align" *ngIf="product">
+    <div>
+      <img class="responsive-img" [src]="product.imgUrl" />
+    </div>
+    <div class="card-content">
+      <div>
+        <span class="card-title grey-text text-darken-4">
+          <h2>{{ product.name }}</h2>
+          <h4>{{ product.price | currency }}</h4>
+        </span>
+      </div>
+
+      <p>{{ product.description }}</p>
+
+      <hr />
+
+      <a
+        style="width: 70%; margin-bottom: 10px"
+        class="waves-effect waves-light btn"
+        (click)="addItemToCart()"
+        >Add to cart</a
+      >
+      <a
+        style="width: 70%"
+        class="waves-effect waves-light btn"
+        routerLink="/products"
+        >Back to products</a
+      >
+    </div>
+  </div>
+</div>

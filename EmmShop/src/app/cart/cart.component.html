@@ -1,0 +1,94 @@
+<div class="container">
+  <div class="row" *ngIf="cart.length > 0 && !checkOut">
+    <h4>Cart items</h4>
+    <div class="col s12 tableFixHead">
+      <table class="striped centered">
+        <thead>
+          <tr>
+            <th>Product</th>
+            <th>Item price</th>
+            <th>Quantity</th>
+            <th>Total</th>
+            <th></th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr *ngFor="let item of cart; let i = index">
+            <td>
+              <div class="row">
+                <div class="col s12">
+                  <img [src]="item.product.imgUrl" style="width: 30px" />
+                </div>
+                <div class="col s12">
+                  {{ item.product.name }}
+                </div>
+              </div>
+            </td>
+            <td>{{ item.product.price | currency }}</td>
+            <td>
+              <div class="row">
+                <div class="col s12">
+                  <a
+                    class="btn"
+                    style="font-size: 12px; margin: 0px; padding: 0px 5px"
+                    (click)="addQuantity(i)"
+                    >+</a
+                  >
+                </div>
+
+                <div class="col s12">
+                  <p>
+                    {{ item.quantity }}
+                  </p>
+                </div>
+
+                <div class="col s12">
+                  <a
+                    class="btn"
+                    style="font-size: 12px; margin: 0px; padding: 0px 5px"
+                    (click)="deductQuantity(i)"
+                    >-</a
+                  >
+                </div>
+              </div>
+            </td>
+            <td>{{ item.quantity * item.product.price | currency }}</td>
+
+            <td>
+              <a class="btn">
+                <i
+                  class="material-icons"
+                  style="font-size: 12px; margin: 0px; padding: 0px"
+                  (click)="removeItemFromCart(item.product._id)"
+                  >close</i
+                >
+              </a>
+            </td>
+          </tr>
+
+          <tr>
+            <td>Total :</td>
+            <td></td>
+            <td></td>
+            <td>{{ totalAmount | currency }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <a class="btn right" (click)="proceedToCheckOut()">Proceed to check out</a>
+  </div>
+
+  <app-check-out
+    *ngIf="checkOut"
+    (editOrder)="cancelCheckOut()"
+    [cart]="cart"
+    [totalAmount]="totalAmount"
+    (ordered)="onJustOrdered()"
+  ></app-check-out>
+
+  <div class="col s12" *ngIf="cart.length === 0 && !justOrdered">
+    <h1>Your cart is currently empty!</h1>
+    <a class="btn" routerLink="/products">View Products To Buy</a>
+  </div>
+</div>

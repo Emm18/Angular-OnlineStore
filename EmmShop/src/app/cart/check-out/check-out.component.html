@@ -1,0 +1,105 @@
+<div class="row" *ngIf="!placeOrder">
+  <div class="col s12">
+    <app-alert
+      [message]="validationError"
+      *ngIf="validationError"
+      (close)="onCloseAlert()"
+    ></app-alert>
+
+    <form [formGroup]="shipping">
+      <label for="shipping"><h4>Shipping Information</h4></label>
+      <div class="row" id="shipping">
+        <div class="col s6">
+          <label for="firstName">First Name</label>
+          <input type="text" id="firstName" formControlName="firstName" />
+          <span
+            style="color: red; font-size: 12px"
+            *ngIf="!shipping.get('firstName').valid && showInvalids"
+            >First name is required</span
+          >
+        </div>
+        <div class="col s6">
+          <label for="lastName">Last Name</label>
+          <input type="text" id="lastName" formControlName="lastName" />
+          <span
+            style="color: red; font-size: 12px"
+            *ngIf="!shipping.get('lastName').valid && showInvalids"
+            >Last name is required</span
+          >
+        </div>
+        <div class="col s12">
+          <label for="address">Address</label>
+          <input type="text" id="address" formControlName="address" />
+          <span
+            style="color: red; font-size: 12px"
+            *ngIf="!shipping.get('address').valid && showInvalids"
+            >Address is required</span
+          >
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col s12">
+          <label for="items"><h4>Items</h4></label>
+          <table id="items" class="striped centered">
+            <thead>
+              <tr>
+                <th>Product</th>
+                <th>Item price</th>
+                <th>Quantity</th>
+                <th>Total</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr *ngFor="let item of cart; let i = index">
+                <td>
+                  <div class="row">
+                    <div class="col s12">
+                      <img [src]="item.product.imgUrl" style="width: 30px" />
+                    </div>
+                    <div class="col s12">
+                      {{ item.product.name }}
+                    </div>
+                  </div>
+                </td>
+                <td>{{ item.product.price | currency }}</td>
+                <td>
+                  <p>
+                    {{ item.quantity }}
+                  </p>
+                </td>
+                <td>{{ item.quantity * item.product.price | currency }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col s6">
+          <label for="payment"><h4>Payment Information</h4></label>
+          <div id="payment">
+            <p>
+              No payment api. Will assume the user entered a valid payment
+              information for now
+            </p>
+          </div>
+        </div>
+        <div class="col s6">
+          <label for="payment"><h4>Total</h4></label>
+          <div id="total" class="right">
+            <h2>{{ totalAmount | currency }}</h2>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <a class="btn left" (click)="onEditOrder()">Edit order</a>
+        <a class="btn right" (click)="onSubmit()">Place Order</a>
+      </div>
+    </form>
+  </div>
+</div>
+
+<app-receipt [orderDetail]="order" *ngIf="placeOrder"></app-receipt>

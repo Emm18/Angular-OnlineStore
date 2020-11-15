@@ -1,0 +1,42 @@
+<div class="navbar-fixed">
+  <nav>
+    <div class="nav-wrapper teal">
+      <a
+        class="left brand-logo"
+        style="cursor: pointer; margin-left: 10px"
+        routerLink="/"
+        >Emm Shop</a
+      >
+      <ul class="left" style="position: relative; left: 160px">
+        <li
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
+        >
+          <a style="cursor: pointer" routerLink="/"> Home </a>
+        </li>
+        <li routerLinkActive="active" *ngIf="isAuthenticated">
+          <a style="cursor: pointer" routerLink="/products"> Products </a>
+        </li>
+        <li routerLinkActive="active" *ngIf="isAuthenticated">
+          <a style="cursor: pointer" [routerLink]="['/orders/id']">Orders</a>
+        </li>
+      </ul>
+      <ul class="right">
+        <li routerLinkActive="active" *ngIf="isAuthenticated">
+          <a style="cursor: pointer" routerLink="/cart">
+            View cart(
+            {{ cartCount ? cartCount : 0 }}
+            )</a
+          >
+        </li>
+
+        <li *ngIf="!isAuthenticated">
+          <a style="cursor: pointer" class="right" routerLink="/auth">Login</a>
+        </li>
+        <li *ngIf="isAuthenticated">
+          <a style="cursor: pointer" (click)="onLogout()">Logout</a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+</div>

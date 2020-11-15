@@ -1,0 +1,61 @@
+<div class="row">
+  <div class="col s12">
+    <div class="card">
+      <div class="card-content">
+        <h3>Thank you for your orders!</h3>
+        <hr />
+
+        <div class="col s12 m6">
+          <label for="orderNumber"><h4>Order Number:</h4></label>
+          <div id="orderNumber">
+            <h4>{{ orderDetail.orderNumber }}</h4>
+          </div>
+        </div>
+
+        <div class="col s12 m6">
+          <label for="estimatedDelivery"><h4>Estimated delivery:</h4></label>
+          <div id="estimatedDelivery">
+            <h4>{{ orderDetail.estimatedShipping }}</h4>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col s12">
+            <label for="items"><h4>Items ordered:</h4></label>
+            <table id="items" class="striped centered">
+              <thead>
+                <th>Product</th>
+                <th>Quantity</th>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of orderDetail.cart; let i = index">
+                  <td>
+                    {{ item.product.name }}
+                  </td>
+                  <td>
+                    {{ item.quantity }}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col s12">
+            <label for="payment"><h4>Total amount paid:</h4></label>
+            <div id="total">
+              <h4>{{ orderDetail.total | currency }}</h4>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row center">
+  <div class="col s12">
+    <a class="btn" routerLink="/products">View More Products</a>
+  </div>
+</div>
